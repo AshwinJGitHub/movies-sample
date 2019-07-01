@@ -1,4 +1,6 @@
+import { MovieService, SearchType} from './../../services/movie.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-movies',
@@ -6,10 +8,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movies.page.scss'],
 })
 export class MoviesPage implements OnInit {
+  results: Observable<any>;
+  searchTerm: string = '';
+  type: SearchType = SearchType.all;
 
-  constructor() { }
+    /**
+   * Constructor of our first page
+   * @param movieService The movie Service to get data
+   */
+  constructor(private movieService: MovieService) { 
+
+  }
 
   ngOnInit() {
+  }
+
+  searchChanged() {
+    this.results = this.movieService.searchData(this.searchTerm, this.type);
   }
 
 }
